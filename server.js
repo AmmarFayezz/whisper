@@ -1,5 +1,4 @@
 import "dotenv/config";
-import dns from "node:dns/promises";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -11,8 +10,6 @@ import userRoutes from "./routes/userRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
 import feedRoutes from "./routes/feedRoutes.js";
 
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
-
 const app = express();
 app.set("trust proxy", 1);
 
@@ -21,7 +18,6 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
-
 app.use(async (req, res, next) => {
   try {
     await connectDB();
